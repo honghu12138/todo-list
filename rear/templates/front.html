@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h1>TODOS</h1>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+    .divcss5{text-decoration:line-through}
+</style>
+</head>
+<body>
+    <form action="add" method="POST">
+        {%csrf_token%}
+        <input type="text" value="" name="value">
+        <input type="submit" value="add" name="addtodo">
+    {{count}} todos
+    </form>
+    <br>
+    <fieldset>
+    
+
+<ul>
+    {% for todo in todos %}
+    <li>
+        {% if todo.state == True %}
+            <div class="divcss5">{{ todo.content}}</div>
+        {% else %}
+            <div>{{ todo.content}} </div>
+        {% endif %}
+        <form action="tododelete" method="POST">
+            {%csrf_token%}
+            <input type="submit" value="delete" name="deletetodo" >
+            <input type="hidden" value="{{todo.pk}}" name="id">
+    </form>
+    <form action="todochange" method="POST">
+            {%csrf_token%}
+            <input type="submit" value="changestate" name="finishtodo">
+            <input type="hidden" value="{{todo.pk}}" name="id">
+    </form>
+       {% endfor%}
+    </li>
+    <br>
+    <form action="completelist" method="POST">
+            {%csrf_token%}       
+            <input type="submit" value="complete" name="complete"> 
+    </form>
+    <form action="uncompletelist" method="POST">
+            {%csrf_token%}
+            <input type="submit" value="uncomplete" name="uncomplete"> 
+    </form>
+    <form action="alltodos" method="POST">
+            {%csrf_token%}
+            <input type="submit" value="all" name="all"> 
+    </form>
+
+
+</body>
+</html>
+ 
