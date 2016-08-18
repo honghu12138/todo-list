@@ -8,52 +8,88 @@
     .divcss5{text-decoration:line-through}
 </style>
 </head>
+ <script type="text/javascript">
+    function ShowElement(element)
+     {
+    var oldhtml = element.innerHTML;
+    var newobj = document.createElement('input');
+    newobj.type = "text";
+    newobj.value = "";
+    newobj.name = "value";
+    newobj.onblur = function(){
+        element.innerHTML = oldhtml;
+    }
+    element.innerHTML = '';
+    element.appendChild(newobj);
+    newobj.focus();
+     }
+     </script>
 <body>
-    <form action="add" method="POST">
+    <form action="" method="POST">
         {%csrf_token%}
         <input type="text" value="" name="value">
         <input type="submit" value="add" name="addtodo">
+        <input type="hidden" value="add" name="action">
     {{count}} todos
     </form>
     <br>
     <fieldset>
     
-
 <ul>
     {% for todo in todos %}
     <li>
+    <form action="" method="POST">
+            {%csrf_token%} 
+         <dd ondblclick="ShowElement(this)">      
         {% if todo.state == True %}
-            <div class="divcss5">{{ todo.content}}</div>
+            <div class="divcss5">{{ todo.content}} </div>
         {% else %}
-            <div>{{ todo.content}} </div>
+            <div>{{ todo.content}}</div>
         {% endif %}
-        <form action="tododelete" method="POST">
+         </dd>
+            <input type="hidden" value="{{todo.pk}}" name="id">
+            <input type="hidden" value="textchange" name="action">
+     </form>
+
+        <form action="" method="POST">
             {%csrf_token%}
             <input type="submit" value="delete" name="deletetodo" >
             <input type="hidden" value="{{todo.pk}}" name="id">
+            <input type="hidden" value="tododelete" name="action">
     </form>
-    <form action="todochange" method="POST">
+    <form action="" method="POST">
             {%csrf_token%}
             <input type="submit" value="changestate" name="finishtodo">
             <input type="hidden" value="{{todo.pk}}" name="id">
+            <input type="hidden" value="todochange" name="action">
+
     </form>
+    
        {% endfor%}
+    
     </li>
     <br>
-    <form action="completelist" method="POST">
+    <form action="" method="POST">
+    <fieldset>
+    <form action="" method="POST">
             {%csrf_token%}       
-            <input type="submit" value="complete" name="complete"> 
+            <input type="submit" value="complete" name="complete">
+            <input type="hidden" value="completelist" name="action"> 
     </form>
-    <form action="uncompletelist" method="POST">
+    <form action="" method="POST">
             {%csrf_token%}
             <input type="submit" value="uncomplete" name="uncomplete"> 
+            <input type="hidden" value="uncompletelist" name="action">
     </form>
-    <form action="alltodos" method="POST">
+    <form action="" method="POST">
             {%csrf_token%}
             <input type="submit" value="all" name="all"> 
+            <input type="hidden" value="alltodos" name="action">
     </form>
 
-
+</ul>
+    </fieldset>
+   </br>
 </body>
 </html>
  
