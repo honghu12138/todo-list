@@ -17,7 +17,7 @@
     newobj.value = "";
     newobj.name = "value";
     newobj.onblur = function(){
-    element.innerHTML = this.value ? this.value : oldhtml;
+    element.innerHTML = oldhtml;
      }   
     element.innerHTML = '';
     element.appendChild(newobj);
@@ -46,7 +46,7 @@
             <div>{{ todo.content}}</div>
         {% endif %}
          </dd>
-            <input type="submit" value=" " name="text" >
+           
             <input type="hidden" value="{{todo.pk}}" name="id">
      </form>
 
