@@ -87,7 +87,17 @@ def count(todos):
     return  number
 
 
-    
+def textchange(request):
+     if request.method == "POST": 
+         value = request.POST.get("id")
+         todo = Todo.objects.get(id=value)
+         todo.content = request.POST.get('value')
+         todo.save()
+     todos = Todo.objects.all()    
+     return render(request,"front.html",{
+            'todos': todos,
+            'count': count(todos)
+        })
 
     
 

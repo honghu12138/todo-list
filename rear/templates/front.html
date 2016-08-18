@@ -8,6 +8,22 @@
     .divcss5{text-decoration:line-through}
 </style>
 </head>
+ <script type="text/javascript">
+    function ShowElement(element)
+     {
+    var oldhtml = element.innerHTML;
+    var newobj = document.createElement('input');
+    newobj.type = "text";
+    newobj.value = "";
+    newobj.name = "value";
+    newobj.onblur = function(){
+    element.innerHTML = this.value ? this.value : oldhtml;
+     }   
+    element.innerHTML = '';
+    element.appendChild(newobj);
+    newobj.focus();
+     }
+     </script>
 <body>
     <form action="add" method="POST">
         {%csrf_token%}
@@ -18,15 +34,22 @@
     <br>
     <fieldset>
     
-
 <ul>
     {% for todo in todos %}
     <li>
+    <form action="textchange" method="POST">
+            {%csrf_token%} 
+         <dd ondblclick="ShowElement(this)">      
         {% if todo.state == True %}
-            <div class="divcss5">{{ todo.content}}</div>
+            <div class="divcss5">{{ todo.content}} </div>
         {% else %}
-            <div>{{ todo.content}} </div>
+            <div>{{ todo.content}}</div>
         {% endif %}
+         </dd>
+            <input type="submit" value=" " name="text" >
+            <input type="hidden" value="{{todo.pk}}" name="id">
+     </form>
+
         <form action="tododelete" method="POST">
             {%csrf_token%}
             <input type="submit" value="delete" name="deletetodo" >
@@ -37,9 +60,12 @@
             <input type="submit" value="changestate" name="finishtodo">
             <input type="hidden" value="{{todo.pk}}" name="id">
     </form>
+    
        {% endfor%}
+    
     </li>
     <br>
+    <fieldset>
     <form action="completelist" method="POST">
             {%csrf_token%}       
             <input type="submit" value="complete" name="complete"> 
@@ -52,8 +78,8 @@
             {%csrf_token%}
             <input type="submit" value="all" name="all"> 
     </form>
-
-
+    </fieldset>
+   </br>
 </body>
 </html>
  

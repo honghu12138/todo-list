@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^tododelete',front_views.tododelete),
     url(r'^completelist',front_views.completelist),
     url(r'^uncompletelist',front_views.uncompletelist),
-    url(r'^alltodos',front_views.alltodos)
+    url(r'^alltodos',front_views.alltodos),
+    url(r'^textchange',front_views.textchange)
 ]
