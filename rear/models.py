@@ -8,9 +8,6 @@ class Todo(models.Model):
     content = models.TextField(u'Content')
     state = models.BooleanField(default='False')
     
-class Action(models.Model):
-    query = models.TextField(u'Content')
-    
 
 
     
