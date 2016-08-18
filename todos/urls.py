@@ -11,9 +11,5 @@ urlpatterns = [
     url(r'^',front_views.home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^todochange',front_views.todochange),
-    url(r'^$',front_views.home),
-    #url(r'^tododelete',front_views.tododelete),
-    #url(r'^completelist',front_views.completelist),
-    #url(r'^uncompletelist',front_views.uncompletelist),
-    #url(r'^alltodos',front_views.alltodos)
+    url(r'^$',front_views.home)
 ]

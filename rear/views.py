@@ -24,6 +24,12 @@ def home(request):
                 todo.state = False
             todo.save()
             todos = Todo.objects.all()
+        elif action == "textchange":
+            value = request.POST.get("id")
+            todo = Todo.objects.get(id=value)
+            todo.content = request.POST.get('value')
+            todo.save()
+            todos = Todo.objects.all() 
         elif action == "tododelete":
             value = request.POST.get("id")
             todo = Todo.objects.get(id=value)
@@ -36,7 +42,9 @@ def home(request):
             todos = Todo.objects.all()
             todos = Todo.objects.filter(state=False)
         elif action == "alltodos":
-            todos = Todo.objects.all() 
+            todos = Todo.objects.all()
+    else:
+        todos = Todo.objects.all() 
     return render(request,"front.html",{
         'todos': todos,
         'count': count(todos) 
@@ -57,8 +65,6 @@ def count(todos):
 
     return  number
 
-
-    
 
     
 
