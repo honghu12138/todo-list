@@ -19,30 +19,15 @@ class TodoTest(TestCase):
         response = self.client.post('/api/todos', data=json.dumps({
             'content': 'todo content'
         }), content_type='application/json')
-
         todo = json.loads(response.content)
         self.assertEquals('todo content', todo['content'])
         self.assertEquals(False, todo['state'])
         self.assertEquals(1, Todo.objects.filter(content='todo content').count())
-
-
-class DelectTest(TestCase):
     def test_delete_todo(self):
-        response = self.client.delete('/api/todo/id',data=json.dumps({
+        response = self.client.post('/api/todos',data=json.dumps({
            'content': 'todo content'
         }), content_type='application/json')
-
-        #todo = json.loads(response.content)
+        todo = json.loads(response.content)
+        value = todo['id']
+        response = self.client.delete('/api/todo/'+str(value),data=json.dumps)
         self.assertEquals(0, Todo.objects.filter(content='todo content').count())
-
-
-
-class AlterTest(TestCase):
-    def test_alter_todo(self):
-        response = self.client.put('/api/todo/id',data=json.dumps({
-           'content': 'todo content'
-        }), content_type='application/json')
-
-        #todo = json.loads(response.content)
-        self.assertEquals(True, todo['state'])
-
