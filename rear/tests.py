@@ -31,3 +31,28 @@ class TodoTest(TestCase):
         value = todo['id']
         response = self.client.delete('/api/todo/'+str(value),data=json.dumps)
         self.assertEquals(0, Todo.objects.filter(content='todo content').count())
+    def test_get_todo(self):
+        response = self.client.post('/api/todos', data=json.dumps({
+            'content': 'todo content'
+        }), content_type='application/json')
+        response = self.client.post('/api/todos', data=json.dumps({
+            'content': 'todo content'
+        }), content_type='application/json')
+        response = self.client.get('/api/todos')
+        todo = json.loads(response.content)
+        print(todo)
+        self.assertEquals(2,len(todo))
+    def test_put_todo(self):
+        response = self.client.post('/api/todos',data=json.dumps({
+           'content': 'todo content'
+        }), content_type='application/json')
+        todo = json.loads(response.content)
+        value = todo['id']
+        response = self.client.put('/api/todo/'+str(value),data=json.dumps({
+        'content':'todo'
+        }),content_type='application/json')
+        self.assertEquals(1,Todo.objects.filter(content='todo').count())
+        response = self.client.put('/api/todo/'+str(value),data=json.dumps({
+        'state': True
+        }),content_type='application/json')
+        self.assertEquals(True,Todo.objects.get(id=value).state)

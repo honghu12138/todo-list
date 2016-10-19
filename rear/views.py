@@ -130,7 +130,11 @@ def edit_todo(request, id):
           try:
               todo = Todo.objects.get(id=id)
               text = json.loads(request.body)
-              todo.content = text.get('content')
+              if text.get('content') != None:
+                  todo.content = text.get('content')
+              if text.get('state') != None:
+                  todo.state = text.get('state')
+              todo.save()
               id = todo.id
               value = todo.content
               todo = dict(
